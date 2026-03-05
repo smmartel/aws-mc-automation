@@ -6,7 +6,7 @@
 
 ### 🏗️ Architecture Overview
 
-![AWS Architecture Diagram]()
+![AWS Architecture Diagram](./gaming_manager_dev.svg)
 
 This project implements a **decoupled, event-driven architecture** to manage game server infrastructure. By separating the **Control Plane** (AWS Lambda/API Gateway) from the **Data Plane** (EC2), the architecture achieves near-zero cost during idle states while ensuring high availability for user-initiated start/stop commands.
 
