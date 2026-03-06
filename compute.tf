@@ -6,7 +6,10 @@ resource "aws_instance" "minecraft_server" {
   associate_public_ip_address = true # Connect to the server from the internet
   iam_instance_profile = aws_iam_instance_profile.minecraft_profile.name
 
-  user_data = file("user_data.sh") # Run the user data script to set up the Minecraft server
+
+  user_data = templatefile("${path.module}/install_script.sh.tpl", {
+    minecraft_server_jar_url = var.minecraft_server_jar_url
+  })
 
   tags = {
     Name = "minecraft-server"

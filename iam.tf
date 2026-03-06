@@ -25,4 +25,5 @@ resource "aws_iam_role_policy_attachment" "ssm_attachment" {
 resource "aws_iam_instance_profile" "minecraft_profile" {
     name = "minecraft-instance-profile"
     role = aws_iam_role.minecraft_role.name
+    
 }
