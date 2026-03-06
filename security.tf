@@ -9,14 +9,14 @@ resource "aws_security_group" "minecraft_sg" {
         from_port   = 25565
         to_port     = 25565
         protocol    = "tcp"
-        cidr_blocks = "0.0.0/0" # Open to the world for Minecraft traffic
+        cidr_blocks = ["0.0.0/0"] # Open to the world for Minecraft traffic
   
 }
     egress {
         from_port   = 0
         to_port     = 0
         protocol    = "-1" 
-        cidr_blocks = "0.0.0/0"
+        cidr_blocks = ["0.0.0/0"]
     }
 }
 
@@ -35,7 +35,7 @@ resource "aws_security_group" "admin_sg" {
         from_port   = 0
         to_port     = 0
         protocol    = "-1" 
-        cidr_blocks = "0.0.0/0"
+        cidr_blocks = ["0.0.0/0"]
     }
   
 }
