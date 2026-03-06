@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep 30 # Wait for the instance to initialize and have network connectivity
+
 # Update the system and install Java 21 (Amazon Corretto)
 dnf update -y
 dnf install -y java-21-amazon-corretto-headless
