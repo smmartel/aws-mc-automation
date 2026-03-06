@@ -7,6 +7,3 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "us-east-1" # My desired region for testing. You can change this as needed.
-}
