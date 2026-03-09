@@ -27,3 +27,24 @@ resource "aws_iam_instance_profile" "minecraft_profile" {
     role = aws_iam_role.minecraft_role.name
     
 }
+
+resource "aws_iam_role_policy" "stop_self_policy" {
+  name = "AllowStopSelfPolicy"
+  role = aws_iam_role.minecraft_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "ec2:StopInstances"
+        Resource = "*"
+        Condition = {
+          StringEquals = {
+            "ec2:ResourceTag/Owner" = "${aws_iam_role.minecraft_role.name}"
+          }
+        }
+      }
+    ]
+  })
+}

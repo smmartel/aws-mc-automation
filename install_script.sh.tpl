@@ -34,3 +34,10 @@ screen -dmS minecraft java -Xmx1536M -Xms1536M -jar minecraft_server.jar nogui
 # 7. Final nudge: ensure the agent is connected
 systemctl restart amazon-ssm-agent
 echo "User_data complete."
+
+# 8. Install Python Dependencies
+dnf install -y python3-pip
+pip3 install mcstatus boto3 requests
+
+# 9. Create a script to check server status and send notifications
+cat << 'EOF' > /opt/minecraft/server_status_check.py
