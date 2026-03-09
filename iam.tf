@@ -39,11 +39,6 @@ resource "aws_iam_role_policy" "stop_self_policy" {
         Effect = "Allow"
         Action = "ec2:StopInstances"
         Resource = "*"
-        Condition = {
-          StringEquals = {
-            "ec2:ResourceTag/Owner" = "${aws_iam_role.minecraft_role.name}"
-          }
-        }
       }
     ]
   })
