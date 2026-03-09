@@ -1,5 +1,6 @@
 import time
 import boto3
+import requests
 from mcstatus import JavaServer
 
 #CONFIG
