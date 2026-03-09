@@ -28,16 +28,38 @@ wget -O minecraft_server.jar "${minecraft_server_jar_url}"
 # 5. Accept EULA
 echo "eula=true" > eula.txt
 
-# 6. Start the server
-screen -dmS minecraft java -Xmx1536M -Xms1536M -jar minecraft_server.jar nogui
-
-# 7. Final nudge: ensure the agent is connected
+# 6. Final nudge: ensure the agent is connected
 systemctl restart amazon-ssm-agent
 echo "User_data complete."
 
-# 8. Install Python Dependencies
+# 7. Install Python Dependencies
 dnf install -y python3-pip
 pip3 install mcstatus boto3 requests
 
-# 9. Create a script to check server status and send notifications
-cat << 'EOF' > /opt/minecraft/server_status_check.py
+# 8. Create a script to check server status and send notifications
+curl -L https://raw.githubusercontent.com/smmartel/aws-mc-automation/main/auto_stop.py -o auto_stop.py
+
+#9. Background Service for Python
+cat <<EOF > /etc/systemd/system/mc-monitor.service
+[Unit]
+Description=Minecraft Server Monitor
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /opt/minecraft/server/auto_stop.py
+Restart=always
+User=root
+WorkingDirectory=/opt/minecraft/server
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+#10. Start everything up
+systemctl daemon-reload
+systemctl enable mc-monitor.service
+systemctl start mc-monitor.service
+
+screen -dmS minecraft java -Xmx1536M -Xms1536M -jar minecraft_server.jar nogui
+
+echo "User_data complete."
